@@ -1,6 +1,8 @@
 import './App.css';
 import Converter from './components/Converter/Converter';
+import Graph from './components/Graph/Graph';
 import { useConverter } from './store/store';
+import { SelectValues } from './types/types';
 
 // const mockDataUsdToRUB: ChartDataObject[] = [
 //   {
@@ -207,6 +209,10 @@ function App() {
         data={{ toBYN: dataBYN, toRUB: dataRUB }}
         selectedOption={selectedOption}
         handleSelectChange={handleSelectChange}
+      />
+      <Graph
+        data={selectedOption.label === SelectValues.BYN ? dataBYN : dataRUB}
+        selectedOption={selectedOption}
       />
     </div>
   );
