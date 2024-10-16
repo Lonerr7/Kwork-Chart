@@ -5,6 +5,7 @@ import { ChartDataObject, SelectOption, SelectValues } from '../../types/types';
 import usdIcon from '../../images/USD 1.svg';
 import rubIcon from '../../images/RUB 1.svg';
 import bynIcon from '../../images/BYN 1.svg';
+import equalsIcon from '../../images/equals.svg';
 import { selectTodaysObject } from '../../utils/selectTodaysObj';
 
 const currencyOptions: any = [
@@ -56,6 +57,7 @@ const Converter: React.FC<Props> = ({
 
   // Обрабатываем выбор другой валюты
   const onSelectChange = (newValue: any) => {
+    setUsdText('1');
     handleSelectChange(newValue);
   };
 
@@ -76,20 +78,29 @@ const Converter: React.FC<Props> = ({
 
   return (
     <div className={s.converter}>
-      <input
-        className={s.converter__input}
-        type="number"
-        value={usdText}
-        onChange={onUsdInputChange}
-      />
-      <span>=</span>
+      <div className={s.converter__box}>
+        <input
+          className={s.converter__input}
+          type="number"
+          value={usdText}
+          onChange={onUsdInputChange}
+        />
 
-      <div>
+        <div className={`${s.converter__currency} ${s.converter__usd}`}>
+          <img className={s.converter__icon} src={usdIcon} alt="usd" />
+          <span className={s.converter__currencyName}>USD</span>
+        </div>
+      </div>
+
+      <img src={equalsIcon} alt="equals" />
+
+      <div className={s.converter__box}>
         <span className={s.converter__value}>
           {selectedOption.value === SelectValues.RUB
             ? todaysRUBValue
             : todaysBYNValue}
         </span>
+
         <Select
           defaultValue={selectedOption}
           options={currencyOptions}
