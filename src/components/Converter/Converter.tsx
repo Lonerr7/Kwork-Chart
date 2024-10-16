@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import s from './Converter.module.css';
-import { ChartDataObject, SelectValues } from '../../types/types';
+import { ChartDataObject, SelectOption, SelectValues } from '../../types/types';
 import usdIcon from '../../images/USD 1.svg';
 import rubIcon from '../../images/RUB 1.svg';
 import bynIcon from '../../images/BYN 1.svg';
 import { selectTodaysObject } from '../../utils/selectTodaysObj';
 
 const currencyOptions: any = [
-  { label: 'RUB', value: SelectValues.RUB, img: rubIcon },
-  { label: 'BYN', value: SelectValues.BYN, img: bynIcon },
+  { label: SelectValues.RUB, value: SelectValues.RUB, img: rubIcon },
+  { label: SelectValues.BYN, value: SelectValues.BYN, img: bynIcon },
 ];
 
 interface Props {
@@ -17,12 +17,20 @@ interface Props {
     toRUB: ChartDataObject[];
     toBYN: ChartDataObject[];
   };
+  selectedOption: SelectOption;
+  handleSelectChange: any;
 }
 
-const Converter: React.FC<Props> = ({ data: { toBYN, toRUB } }) => {
+const Converter: React.FC<Props> = ({
+  data: { toBYN, toRUB },
+  selectedOption,
+  handleSelectChange,
+}) => {
+  // Получаем объекты для дефолтного значения в конвертере
   const todaysRUBObj = toRUB.find((obj) => obj.id === 'Aliexpress')!;
   const todaysBYNObj = toBYN.find((obj) => obj.id === 'Aliexpress')!;
 
+  // Получаем дефолтные значения каждой валюты для отображения в конвертере
   const [todaysRUBValue, setTodaysRUBValue] = useState(
     todaysRUBObj.data.find((obj) => selectTodaysObject(obj))?.y
   );
@@ -30,17 +38,41 @@ const Converter: React.FC<Props> = ({ data: { toBYN, toRUB } }) => {
     todaysBYNObj.data.find((obj) => selectTodaysObject(obj))?.y
   );
 
-  const [usdText, setUsdText] = useState('1');
-  const [selectedOption, setSelectedOption] = useState({
-    value: SelectValues.RUB,
-    img: rubIcon,
-  });
+  // Копии сегодняшних валют для того, если пользователь захочет ввести свое значение -> чтобы оно пересчиталось. Если введет 0 - то потом без этих копий не получится считать
+  const todaysRUBValueCopy = todaysRUBObj.data.find((obj) =>
+    selectTodaysObject(obj)
+  )?.y;
+  const todasyBYNValueCopy = todaysBYNObj.data.find((obj) =>
+    selectTodaysObject(obj)
+  )?.y;
 
+  // Текст, который пользователь вводит для конвертации валюты
+  const [usdText, setUsdText] = useState('1');
+
+  // Обрабатываем ввод чисел в USD
   const onUsdInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsdText(e.currentTarget.value);
   };
 
-  useEffect(() => {}, [usdText, selectedOption]);
+  // Обрабатываем выбор другой валюты
+  const onSelectChange = (newValue: any) => {
+    handleSelectChange(newValue);
+  };
+
+  // Обрабатываем автоматический пересчет валюты исходя из введенного числа пользователем
+  useEffect(() => {
+    if (
+      selectedOption.value === SelectValues.RUB &&
+      todaysRUBValue !== undefined &&
+      todaysRUBValueCopy !== undefined
+    ) {
+      setTodaysRUBValue(+(todaysRUBValueCopy * +usdText).toFixed(2));
+    } else {
+      setTodaysBYNValue(+(todasyBYNValueCopy! * +usdText).toFixed(2));
+    }
+
+    // eslint-disable-next-line
+  }, [usdText, selectedOption]);
 
   return (
     <div className={s.converter}>
@@ -53,13 +85,16 @@ const Converter: React.FC<Props> = ({ data: { toBYN, toRUB } }) => {
       <span>=</span>
 
       <div>
-        <span className={s.converter__value}>{todaysRUBValue}</span>
+        <span className={s.converter__value}>
+          {selectedOption.value === SelectValues.RUB
+            ? todaysRUBValue
+            : todaysBYNValue}
+        </span>
         <Select
           defaultValue={selectedOption}
           options={currencyOptions}
-          onChange={(newValue: any) => {
-            setSelectedOption(newValue);
-          }}
+          onChange={onSelectChange}
+          isSearchable={false}
           formatOptionLabel={(currency: any) => (
             <div>
               <img src={currency.img} alt="flag" />

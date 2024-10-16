@@ -1,6 +1,7 @@
 export interface SelectOption {
-  value: string;
-  label: string;
+  value: SelectValues;
+  label: SelectValues;
+  img: string;
 }
 
 export enum SelectValues {
@@ -14,4 +15,11 @@ export interface ChartDataObject {
     x: Date;
     y: number;
   }[];
+}
+
+export interface ConverterState {
+  dataToRUB: ChartDataObject[];
+  dataToBYN: ChartDataObject[];
+  selectedOption: SelectOption;
+  handleSelectChange: any;
 }
