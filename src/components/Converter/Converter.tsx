@@ -95,24 +95,31 @@ const Converter: React.FC<Props> = ({
       <img src={equalsIcon} alt="equals" />
 
       <div className={s.converter__box}>
-        <span className={s.converter__value}>
-          {selectedOption.value === SelectValues.RUB
-            ? todaysRUBValue
-            : todaysBYNValue}
-        </span>
+        <div className={s.converter__boxInner}>
+          <span className={s.converter__value}>
+            {selectedOption.value === SelectValues.RUB
+              ? todaysRUBValue
+              : todaysBYNValue}
+          </span>
 
-        <Select
-          defaultValue={selectedOption}
-          options={currencyOptions}
-          onChange={onSelectChange}
-          isSearchable={false}
-          formatOptionLabel={(currency: any) => (
-            <div>
-              <img src={currency.img} alt="flag" />
-              <span>{currency.value}</span>
-            </div>
-          )}
-        />
+          <Select
+            classNamePrefix="select"
+            defaultValue={selectedOption}
+            options={currencyOptions}
+            onChange={onSelectChange}
+            isSearchable={false}
+            formatOptionLabel={(currency: any) => (
+              <div className='select__currencyBox'>
+                <img
+                  className={s.converter__icon}
+                  src={currency.img}
+                  alt="flag"
+                />
+                <span className='select__optionText'>{currency.value}</span>
+              </div>
+            )}
+          />
+        </div>
       </div>
     </div>
   );

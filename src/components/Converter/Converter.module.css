@@ -38,3 +38,19 @@
 .converter__icon {
   margin-right: 5px;
 }
+
+.converter__boxInner {
+  position: relative;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 2px;
+  border: 1px solid #f0f1f4;
+  border-radius: 10px;
+}
+
+.converter__value {
+  margin-left: auto;
+  margin-right: 10px;
+}
