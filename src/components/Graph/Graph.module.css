@@ -1,5 +1,32 @@
 .graph {
+  position: relative;
   width: 600px;
-  height: 300px;
+  height: 430px;
   margin-top: 50px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.graph__lastUpdated {
+  position: absolute;
+  bottom: 0;
+}
+
+.graph__lastUpdatedText {
+  margin-right: 5px;
+}
+
+.graph__bottom {
+  display: flex;
+}
+
+.graph__link {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.graph__linkText {
+  margin-right: 7px;
 }

@@ -23,3 +23,9 @@ export interface ConverterState {
   selectedOption: SelectOption;
   handleSelectChange: any;
 }
+
+export enum DataOrigins {
+  ALIEXPRESS = 'Aliexpress',
+  CBRF = 'ЦБ РФ',
+  NBRB = 'НБ РБ',
+}
