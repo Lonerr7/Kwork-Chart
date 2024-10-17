@@ -25,17 +25,18 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
       year: 'numeric',
     });
 
+  // Логика для нахождения минимального числа в массиве -> при смене валюты начало заливки графиков корректно изменится
   const min1 = Math.min(...data[0].data.map((item) => item.y));
   const min2 = Math.min(...data[1].data.map((item) => item.y));
   const minimal = Math.min(min1, min2);
   const minimalFloored = Math.floor(minimal);
 
-  console.log(minimal);
-
   return (
     <div className={s.graph}>
       <ResponsiveLine
         data={data}
+        enableArea
+        areaBaselineValue={minimalFloored}
         defs={[
           // using plain object
           {
@@ -51,9 +52,7 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
           // match using object query
           { match: '*', id: 'gradientC' },
         ]}
-        // enableArea
         enableCrosshair={true}
-        // areaBaselineValue={}
         tooltip={(props) => {
           return (
             <div
@@ -79,8 +78,8 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
             fontSize: 14,
           },
         }}
-        margin={{ top: 50, right: 60, bottom: 70, left: 60 }}
-        xScale={{ type: 'time' }}
+        margin={{ top: 10, right: 60, bottom: 70, left: 60 }}
+        xScale={{ type: 'time', precision: 'day' }}
         yScale={{
           type: 'linear',
           min: minimalFloored,
@@ -110,8 +109,6 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
             return formatDateToRuLocale(props);
           },
         }}
-        enableArea
-        areaBaselineValue={minimalFloored}
         pointSize={3}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={6}
