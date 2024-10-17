@@ -6,6 +6,10 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.graph:first-child {
+  height: 116% !important;
+}
+
 .graph__lastUpdated {
   position: absolute;
   bottom: 0;
@@ -27,17 +31,60 @@
   align-items: center;
 }
 
+.graph__link:hover {
+  text-decoration: underline;
+}
+
 .graph__linkText {
   margin-right: 7px;
 }
 
+.graph__tooltip_red {
+  border: 1px solid #e5352f;
+  position: relative;
+  position: relative;
+  min-width: 100px;
+  padding: 10px 0 10px 6px;
+  border-radius: 3px;
+  background-color: rgba(249, 249, 249, 0.9);
+}
+
+.graph__tooltip_red::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  margin: 0 auto;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #e5352f;
+}
+
 .graph__tooltip {
+  position: relative;
   min-width: 100px;
   /* height: 36px; */
   padding: 10px 0 10px 6px;
   border: 1px solid #f7971d;
   border-radius: 3px;
   background-color: rgba(249, 249, 249, 0.9);
+}
+
+.graph__tooltip::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  margin: 0 auto;
+  width: 0;
+  height: 0;
+  border-top: 7px solid #f7971d;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
 }
 
 .graph__tooltipText {

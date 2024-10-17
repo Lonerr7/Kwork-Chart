@@ -1,4 +1,5 @@
 import { ResponsiveLine } from '@nivo/line';
+import { linearGradientDef } from '@nivo/core';
 import {
   ChartDataObject,
   DataOrigins,
@@ -28,17 +29,40 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
   return (
     <div className={s.graph}>
       <ResponsiveLine
-        enableArea
-        // areaBaselineValue={75}
+        data={data}
+        defs={[
+          // using plain object
+          {
+            id: 'gradientC',
+            type: 'linearGradient',
+            colors: [
+              { offset: 0, color: 'inherit' },
+              { offset: 100, color: 'inherit' },
+            ],
+          },
+        ]}
+        fill={[
+          // match using object query
+          { match: '*', id: 'gradientC' },
+        ]}
+        // enableArea
+        enableCrosshair={true}
+        // areaBaselineValue={}
         tooltip={(props) => {
           return (
-            <div className={s.graph__tooltip}>
+            <div
+              className={
+                props.point.serieId === DataOrigins.ALIEXPRESS
+                  ? `${s.graph__tooltip_red}`
+                  : `${s.graph__tooltip}`
+              }
+            >
               <span className={s.graph__tooltipText}>
                 {formatDateToRuLocale(props.point.data.x as Date)}
               </span>
               <span className={s.graph__tooltipText}>
                 1$ = {props.point.data.yFormatted}
-                {selectedOption.value === SelectValues.BYN ? 'Br' : '₽'}
+                {selectedOption.value === SelectValues.BYN ? ' Br' : ' ₽'}
               </span>
             </div>
           );
@@ -49,8 +73,7 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
             fontSize: 14,
           },
         }}
-        data={data}
-        margin={{ top: 50, right: 60, bottom: 130, left: 60 }}
+        margin={{ top: 50, right: 60, bottom: 70, left: 60 }}
         xScale={{ type: 'time' }}
         yScale={{
           type: 'linear',
@@ -96,9 +119,9 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
           {
             anchor: 'bottom',
             translateX: -50,
+            translateY: 73,
             direction: 'row',
             justify: false,
-            translateY: 133,
             itemsSpacing: 0,
             itemDirection: 'left-to-right',
             itemWidth: 80,
