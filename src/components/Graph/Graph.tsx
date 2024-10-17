@@ -8,6 +8,7 @@ import {
 import s from './Graph.module.css';
 import { selectTodaysObject } from '../../utils/selectTodaysObj';
 import enterShopIcon from '../../images/enter-shop.svg';
+import { formatDateToRuLocale } from '../../utils/formatDateToRuLocale';
 
 interface Props {
   data: ChartDataObject[];
@@ -27,6 +28,22 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
   return (
     <div className={s.graph}>
       <ResponsiveLine
+        enableArea
+        // areaBaselineValue={75}
+        tooltip={(props) => {
+          return (
+            <div className={s.graph__tooltip}>
+              <span className={s.graph__tooltipText}>
+                {formatDateToRuLocale(props.point.data.x as Date)}
+              </span>
+              <span className={s.graph__tooltipText}>
+                1$ = {props.point.data.yFormatted}
+                {selectedOption.value === SelectValues.BYN ? 'Br' : '₽'}
+              </span>
+            </div>
+          );
+        }}
+        curve="cardinal"
         theme={{
           text: {
             fontSize: 14,
@@ -61,19 +78,19 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
           legendPosition: 'middle',
           truncateTickAt: 0,
           format: function noRefCheck(props) {
-            return props.toLocaleDateString('ru-RU', {
-              day: 'numeric',
-              month: 'numeric',
-            });
+            return formatDateToRuLocale(props);
           },
         }}
-        pointSize={10}
+        pointSize={3}
         pointColor={{ theme: 'background' }}
-        pointBorderWidth={2}
+        pointBorderWidth={6}
         pointBorderColor={{ from: 'serieColor' }}
         pointLabel="data.yFormatted"
         pointLabelYOffset={-12}
         enableTouchCrosshair={true}
+        colors={{
+          datum: 'color',
+        }}
         useMesh={true}
         legends={[
           {

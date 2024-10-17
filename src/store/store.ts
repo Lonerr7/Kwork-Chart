@@ -1,62 +1,13 @@
 import { create } from 'zustand';
 import { generateRandomNumber } from '../utils/generateRandomNumInRange';
-import {
-  ChartDataObject,
-  ConverterState,
-  SelectOption,
-  SelectValues,
-} from '../types/types';
+import { ConverterState, SelectOption, SelectValues } from '../types/types';
 import rubIcon from '../images/RUB 1.svg';
 
 export const useConverter = create<ConverterState>()((set) => ({
   dataToRUB: [
     {
       id: 'Aliexpress',
-      data: [
-        {
-          x: new Date(2024, 9, 1),
-          y: generateRandomNumber(70, 120),
-        },
-        {
-          x: new Date(2024, 9, 2),
-          y: generateRandomNumber(70, 120),
-        },
-        {
-          x: new Date(2024, 9, 3),
-          y: generateRandomNumber(70, 120),
-        },
-        {
-          x: new Date(2024, 9, 6),
-          y: generateRandomNumber(70, 120),
-        },
-        {
-          x: new Date(2024, 9, 8),
-          y: generateRandomNumber(70, 120),
-        },
-        {
-          x: new Date(2024, 9, 9),
-          y: generateRandomNumber(70, 120),
-        },
-        {
-          x: new Date(2024, 9, 10),
-          y: generateRandomNumber(70, 120),
-        },
-        {
-          x: new Date(2024, 9, 11),
-          y: generateRandomNumber(70, 120),
-        },
-        {
-          x: new Date(2024, 9, 13),
-          y: generateRandomNumber(70, 120),
-        },
-        {
-          x: new Date(2024, 9, 16),
-          y: generateRandomNumber(70, 120),
-        },
-      ],
-    },
-    {
-      id: 'ЦБ РФ',
+      color: '#E5352F',
       data: [
         {
           x: new Date(2024, 9, 1),
@@ -100,10 +51,57 @@ export const useConverter = create<ConverterState>()((set) => ({
         },
       ],
     },
-  ] as ChartDataObject[],
+    {
+      id: 'ЦБ РФ',
+      color: '#F3973E',
+      data: [
+        {
+          x: new Date(2024, 9, 1),
+          y: generateRandomNumber(70, 120),
+        },
+        {
+          x: new Date(2024, 9, 2),
+          y: generateRandomNumber(70, 120),
+        },
+        {
+          x: new Date(2024, 9, 3),
+          y: generateRandomNumber(70, 120),
+        },
+        {
+          x: new Date(2024, 9, 6),
+          y: generateRandomNumber(70, 120),
+        },
+        {
+          x: new Date(2024, 9, 8),
+          y: generateRandomNumber(70, 120),
+        },
+        {
+          x: new Date(2024, 9, 9),
+          y: generateRandomNumber(70, 120),
+        },
+        {
+          x: new Date(2024, 9, 10),
+          y: generateRandomNumber(70, 120),
+        },
+        {
+          x: new Date(2024, 9, 11),
+          y: generateRandomNumber(70, 120),
+        },
+        {
+          x: new Date(2024, 9, 13),
+          y: generateRandomNumber(70, 120),
+        },
+        {
+          x: new Date(),
+          y: generateRandomNumber(70, 120),
+        },
+      ],
+    },
+  ],
   dataToBYN: [
     {
       id: 'Aliexpress',
+      color: '#E5352F',
       data: [
         {
           x: new Date(2024, 9, 1),
@@ -149,6 +147,7 @@ export const useConverter = create<ConverterState>()((set) => ({
     },
     {
       id: 'НБ РБ',
+      color: '#F3973E',
       data: [
         {
           x: new Date(2024, 9, 1),
@@ -192,7 +191,7 @@ export const useConverter = create<ConverterState>()((set) => ({
         },
       ],
     },
-  ] as ChartDataObject[],
+  ],
   selectedOption: {
     value: SelectValues.RUB,
     img: rubIcon,
@@ -200,11 +199,10 @@ export const useConverter = create<ConverterState>()((set) => ({
   },
   handleSelectChange: (newValue: SelectOption) =>
     set(() => {
-
       console.log(`from zustand`);
-      
+
       return {
         selectedOption: newValue,
-      }
+      };
     }),
 }));

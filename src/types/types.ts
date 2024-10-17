@@ -11,6 +11,7 @@ export enum SelectValues {
 
 export interface ChartDataObject {
   id: string;
+  color?: string;
   data: {
     x: Date;
     y: number;

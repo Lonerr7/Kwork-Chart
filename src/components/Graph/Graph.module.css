@@ -30,3 +30,23 @@
 .graph__linkText {
   margin-right: 7px;
 }
+
+.graph__tooltip {
+  min-width: 100px;
+  /* height: 36px; */
+  padding: 10px 0 10px 6px;
+  border: 1px solid #f7971d;
+  border-radius: 3px;
+  background-color: rgba(249, 249, 249, 0.9);
+}
+
+.graph__tooltipText {
+  display: block;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.graph__tooltipText:last-child {
+  margin-bottom: 0;
+}
