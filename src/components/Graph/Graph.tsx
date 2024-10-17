@@ -1,5 +1,4 @@
 import { ResponsiveLine } from '@nivo/line';
-import { linearGradientDef } from '@nivo/core';
 import {
   ChartDataObject,
   DataOrigins,
@@ -25,6 +24,13 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
       month: 'numeric',
       year: 'numeric',
     });
+
+  const min1 = Math.min(...data[0].data.map((item) => item.y));
+  const min2 = Math.min(...data[1].data.map((item) => item.y));
+  const minimal = Math.min(min1, min2);
+  const minimalFloored = Math.floor(minimal);
+
+  console.log(minimal);
 
   return (
     <div className={s.graph}>
@@ -77,7 +83,7 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
         xScale={{ type: 'time' }}
         yScale={{
           type: 'linear',
-          min: 'auto',
+          min: minimalFloored,
           max: 'auto',
         }}
         axisTop={null}
@@ -104,6 +110,8 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
             return formatDateToRuLocale(props);
           },
         }}
+        enableArea
+        areaBaselineValue={minimalFloored}
         pointSize={3}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={6}
