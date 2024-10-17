@@ -75,23 +75,34 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
         curve="cardinal"
         theme={{
           text: {
-            fontSize: 14,
+            fill: '#747474',
+            fontSize: 11,
+          },
+          legends: {
+            text: {
+              fontSize: 11,
+              fontFamily: 'Roboto, sans-serif',
+            },
           },
         }}
         margin={{ top: 10, right: 60, bottom: 70, left: 60 }}
-        xScale={{ type: 'time', precision: 'day' }}
+        xScale={{ type: 'point' }}
         yScale={{
           type: 'linear',
           min: minimalFloored,
           max: 'auto',
         }}
+        gridYValues={3}
+        gridXValues={20}
         axisTop={null}
         axisRight={{
-          tickSize: 5,
+          tickSize: 0,
           tickPadding: 5,
           tickRotation: 0,
           truncateTickAt: 0,
           format: function noRefCheck(props) {
+            console.log(props);
+
             return `${props} ${
               selectedOption.label === SelectValues.RUB ? '₽' : 'Br'
             }`;
@@ -99,9 +110,9 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
         }}
         axisLeft={null}
         axisBottom={{
-          tickSize: 5,
+          tickSize: 0,
           tickPadding: 5,
-          tickRotation: -90,
+          tickRotation: -89.97,
           legendOffset: 36,
           legendPosition: 'middle',
           truncateTickAt: 0,
@@ -123,8 +134,8 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
         legends={[
           {
             anchor: 'bottom',
-            translateX: -50,
-            translateY: 73,
+            translateX: -30,
+            translateY: 63,
             direction: 'row',
             justify: false,
             itemsSpacing: 0,
@@ -132,7 +143,7 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
             itemWidth: 80,
             itemHeight: 20,
             itemOpacity: 0.75,
-            symbolSize: 12,
+            symbolSize: 10,
             symbolShape: 'circle',
             symbolBorderColor: 'rgba(0, 0, 0, .5)',
             effects: [
