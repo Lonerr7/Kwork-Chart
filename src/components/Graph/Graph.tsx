@@ -101,10 +101,23 @@ const Graph: React.FC<Props> = ({ data, selectedOption }) => {
           tickRotation: 0,
           truncateTickAt: 0,
           format: function noRefCheck(props) {
-            console.log(props);
+            if (selectedOption.label === SelectValues.BYN) {
+              if (`${props}`.length === 1) {
+                props = `${props} \u3000 `;
+              } 
+              else if (`${props}`.length === 3) {
+                props = `${props}\u2000`;
+              }
+            } else {
+              if (`${props}`.length === 2) {
+                props = `${props}\u2000 `
+              } else {
+                props = `${props} `
+              }
+            }
 
-            return `${props} ${
-              selectedOption.label === SelectValues.RUB ? '₽' : 'Br'
+            return `${props}${
+              selectedOption.label === SelectValues.RUB ? '₽' : ' Br'
             }`;
           },
         }}
